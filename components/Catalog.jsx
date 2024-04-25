@@ -1,5 +1,4 @@
 'use client'
-import { catalogData } from './catalogData';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
@@ -9,7 +8,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-export default function Catalog() {
+
+export default function Catalog({catalog}) {
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
@@ -33,7 +33,7 @@ export default function Catalog() {
             modules={[Navigation, Autoplay, Scrollbar, A11y]}
               spaceBetween={10}
               loop={true}
-              slidesPerView={isMobile? 2 : 5}
+              slidesPerView={isMobile? 1 : 3}
               navigation={{ prevEl: null, nextEl: null }}
               scrollbar={{ draggable: true }}
               autoplay= {{
@@ -43,20 +43,19 @@ export default function Catalog() {
               
          >
             {
-                catalogData.map((data, index) => {
+                catalog.map((data, index) => {
                     return (
                         <SwiperSlide key={index} className="p-5 flex flex-col gap-5 pb-10">
+                            <h1 className="font-semibold lg:text-2xl text-md text-blue-800 my-3 text-center p-2 bg-blue-50 rounded-xl capitalize">{data.name}</h1>
                             <div className="w-full bg-contain object-contain">
                                 <Image
                                 src={data.photo}
-                                width={200}
-                                height={400}
+                                width={1000}
+                                height={1400}
                                 alt={data.alt}
-                                className="w-full h-[200px] object-cover"
+                                className=" object-cover"
                                 />
                             </div>
-                            <h1 className="font-semibold text-xl my-3 capitalize">{data.name}</h1>
-                            <p>{data.desc}</p>
                         </SwiperSlide>
                     )
                 })
