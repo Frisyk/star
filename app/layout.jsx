@@ -3,7 +3,7 @@ import './globals.css'
 import { Poppins } from 'next/font/google'
 import Footer from '@/components/Footer'
 
-const inter = Poppins({ subsets: ['latin'], weight: ['400', '600', '800'] })
+const inter = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900', '100', '200', '300'] })
 
 export const metadata = {
   title: {
@@ -16,8 +16,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Header />
+      <body className={`${inter.className} no-scrollbar`}>
+      <Header />
           {children}
         <Footer />
         </body>
