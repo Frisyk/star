@@ -94,6 +94,14 @@ export const projectData = [
         github: "https://github.com/Frisyk/next-mongo"
     },
     {
+        id:9,
+        title: "Threads App",
+        desc: "Forum bertanya dan berkomentar dengan fitur CRUD dan authentikasi. <br/> Tech Stack: React.JS, Redux",
+        image: "/project/threads.png",
+        slug: "https://threads-app-one-tan.vercel.app/",
+        github: "https://github.com/Frisyk/thread-app"
+    },
+    {
         id:8,
         title: "Advanced Notes App",
         desc: "Aplikasi pengelolaan catatan dengan fitur CRUD, ubah tema dan bahasa serta AUthentikasi <br/> Tech Stack: React.Js, Context",
@@ -116,14 +124,6 @@ export const projectData = [
         image: "/project/note.png",
         slug: "https://frisyk-notes-apps.vercel.app",
         github: "https://github.com/Frisyk/notes-app"
-    },
-    {
-        id:9,
-        title: "Threads App",
-        desc: "Forum bertanya dan berkomentar dengan fitur CRUD dan authentikasi. <br/> Tech Stack: React.JS, Redux",
-        image: "/project/threads.png",
-        slug: "https://threads-app-one-tan.vercel.app/",
-        github: "https://github.com/Frisyk/thread-app"
     },
     {
         id:4,
