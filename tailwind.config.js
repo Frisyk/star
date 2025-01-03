@@ -32,6 +32,13 @@ module.exports = {
           '100%': { opacity: 1, transform: 'scale(1)' },
         },
       },
+      transitionDelay: {
+        200: '200ms',
+        400: '400ms',
+        600: '600ms',
+        800: '800ms',
+        1000: '1000ms',
+      },
     },
   },
   plugins: [],

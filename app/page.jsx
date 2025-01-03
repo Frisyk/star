@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="home flex flex-col lg:gap-10 gap-5 pb-10 lg:flex-row items-center w-4/5 mx-auto">
+    <div className="home flex flex-col my-10 h-screen lg:gap-10 gap-5 pb-10 lg:flex-row items-center w-4/5 mx-auto">
       {/* Animated Image */}
       <motion.div
         initial={{ opacity: 0, y: -50 }}
@@ -48,7 +48,7 @@ export default function Home() {
           </span>
         </motion.h1>
         <motion.p
-          className="lg:text-3xl text-lg tracking-wider lg:py-2 leading-relaxed mb-3"
+          className="lg:text-3xl text-lg tracking-wider lg:py-2 leading-relaxed mb-5"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
@@ -63,7 +63,7 @@ export default function Home() {
         >
           <Link
             href="/about"
-            className="bg-transparent text-blue-800 font-semibold text-xl py-2 px-6 rounded-md w-fit outline outline-blue-800 hover:bg-blue-800 hover:text-white duration-300"
+            className="bg-transparent text-blue-800 font-semibold t ext-xl py-2 px-6 rounded-md w-fit outline outline-blue-800 hover:bg-blue-800 hover:text-white duration-300"
           >
             About Me ➡️
           </Link>

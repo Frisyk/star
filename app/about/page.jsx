@@ -21,7 +21,7 @@ export default function AboutPage() {
             }}
             className="min-h-screen bg-orange-100 flex flex-col items-center justify-center p-10"
         >
-            <div className="max-w-4xl w-full lg:flex items-center justify-center gap-10">
+            <div className="max-w-5xl w-full lg:flex items-center justify-center gap-10">
                 <div className="lg:w-1/3">
                     <Image
                         src={profile}
@@ -35,12 +35,12 @@ export default function AboutPage() {
                     <h1 className="text-blue-800 lg:text-5xl text-3xl font-bold mb-5 mt-5 lg:text-left">
                         Frisnadi Nurul Huda
                     </h1>
-                    <p className="text-xl lg:text-2xl leading-8 mb-8 lg:text-left">
-                        Undergraduate Islamic Religious Education Student at UIN Sunan Kalijaga Yogyakarta. Has an interest in Education, IT, and Graphic Design. Experienced in Adobe Illustrator, Figma, Canva, and other design software. Active in volunteer programs for children&apos;s education.
+                    <p className="text-lg lg:text-xl leading-8 mb-8 lg:text-left">
+                    An undergraduate Islamic Religious Education student at UIN Sunan Kalijaga Yogyakarta with strong interests in Education, IT, and Graphic Design. Experienced in frontend development using <b> React.js </b>, Next.js and Laravel along with backend skills in Node.js with Hapi Framework, experience in databases like MongoDB and SQL. Skilled in mobile development with Kotlin and excels in design-to-code workflows, translating UI/UX designs from Figma into responsive web interfaces. 
                     </p>
                     <div className="flex justify-center lg:justify-start">
                         <Link
-                            href="https://drive.google.com/file/d/1WmhgP6mfqVjh-cXe_9Dav_I8NRLy1I8F/view?usp=drive_link"
+                            href="https://drive.google.com/file/d/184YgoIMMOACat1Mo8lp4CILgvvXMoD5S/view?usp=drive_link"
                             className="bg-blue-600 text-white py-3 px-6 rounded-full w-full text-center text-lg font-semibold hover:bg-blue-700 transition duration-300"
                             target="_blank"
                         >
