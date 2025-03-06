@@ -3,10 +3,6 @@ import Image from "next/image";
 import profile from "@/public/portofolio/15.png";
 import Link from "next/link";
 
-export const metadata = {
-    title: "About"
-};
-
 export default function AboutPage() {
     return (
         <MotionDiv
@@ -19,7 +15,7 @@ export default function AboutPage() {
                 animateState: { opacity: 1 },
                 exitState: { opacity: 0 }
             }}
-            className="min-h-screen bg-orange-100 flex flex-col items-center justify-center p-10"
+            className="min-h-screen bg-orange-100 flex flex-col -mt-3 items-center justify-center p-10"
         >
             <div className="max-w-5xl w-full lg:flex items-center justify-center gap-10">
                 <div className="lg:w-1/3">
