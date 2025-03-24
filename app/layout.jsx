@@ -2,6 +2,7 @@ import Header from '@/components/Header'
 import './globals.css'
 import { Poppins } from 'next/font/google'
 import Footer from '@/components/Footer'
+import { ThemeProvider } from '@/components/ThemeProvider'
 
 const inter = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900', '100', '200', '300'] })
 
@@ -55,14 +56,16 @@ export const metadata = {
   author: "Frisnadi Nurul Huda",
 };
 
-
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} no-scrollbar`}>
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+      <body className={`${inter.className} dark:bg-gray-900 dark:text-white`}>
+        <ThemeProvider>
           <Header />
-          {children}
-        </body>
+          <main className='md:mt-20'>{children}</main>
+          {/* <Footer /> */}
+        </ThemeProvider>
+      </body>
     </html>
-  )
+  );
 }
