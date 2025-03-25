@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { BsInstagram, BsGithub, BsLinkedin } from 'react-icons/bs'
 import { MdOutlineAttachEmail } from "react-icons/md";
 
-export default function Footer() {
+export function Footer() {
     return (
             <section className="flex text-xl md:text-2xl lg:text-3xl gap-5 lg:gap-8">
                 <Link target='_blank' className="hover:text-red-700" href={'https://www.instagram.com/frisnadiyk/'} ><BsInstagram /> </Link>
