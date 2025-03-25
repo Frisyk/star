@@ -82,16 +82,8 @@ export const projectData = [
         title: "Chatbot UKM Maju App",
         desc: "Chatbot yang dapat menjawab pertanyaan tentang permasalahan UKM. <br/> Tech Stack: Next.JS, Llama 3, NextAuth, Tailwindcss, TypeScript",
         image: "/project/ukm.png",
-        slug: "https://ukmmaju.vercel.app/",
+        slug: "https://ukmaju.vercel.app/",
         github: "https://github.com/Frisyk/ukmaju"
-    },
-    {
-        id:11,
-        title: "E-Learning App",
-        desc: "Web belajar dengan fitur CRUD, authentikasi, dan berbagai fitur lainnya. <br/> Tech Stack: Laravel, Tailwindcss, Brezze, MySQL",
-        image: "/project/elearning.png",
-        slug: "",
-        github: "https://github.com/Frisyk/e-learning"
     },
     {
         id:1,
@@ -118,12 +110,28 @@ export const projectData = [
         github: "https://github.com/Frisyk/thread-app"
     },
     {
+        id:9,
+        title: "Quiz Guess Ayah in Al-Qur'an",
+        desc: "Web kuis menebak ayat dalam Al Quran sederhana dengan API dari https://equran.id/apidev/v2. <br/> Tech Stack: Next.JS, Tailwindcss, TypeScript",
+        image: "/project/hafalan.png",
+        slug: "https://hafalanq.vercel.app/",
+        github: "https://github.com/Frisyk/memorization-test"
+    },
+    {
         id:8,
         title: "Advanced Notes App",
         desc: "Aplikasi pengelolaan catatan dengan fitur CRUD, ubah tema dan bahasa serta AUthentikasi <br/> Tech Stack: React.Js, Context",
         image: "/project/noteV2.png",
         slug: "https://react-notes-app-self.vercel.app/",
         github: "https://github.com/Frisyk/react-notesApp"
+    },
+    {
+        id:11,
+        title: "E-Learning App",
+        desc: "Web belajar dengan fitur CRUD, authentikasi, dan berbagai fitur lainnya. <br/> Tech Stack: Laravel, Tailwindcss, Brezze, MySQL",
+        image: "/project/elearning.png",
+        slug: "",
+        github: "https://github.com/Frisyk/e-learning"
     },
     {
         id:31,
