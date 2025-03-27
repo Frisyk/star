@@ -86,6 +86,14 @@ export const projectData = [
         github: "https://github.com/Frisyk/ukmaju"
     },
     {
+        id:13,
+        title: "Thread API",
+        desc: "API lengkap dengan CRUD, CI/CD dan authentikasi. <br/> Tech Stack: Hapi.JS, Node.JS, AWS, PostgreSQL, TDD, CI/CD, Github Actions, JavaScript",
+        image: "/project/back.png",
+        slug: "",
+        github: "https://github.com/Frisyk/forum-api-dicoding"
+    },
+    {
         id:1,
         title: "ShalatYuk",
         desc: "WebApp untuk Belajar Shalat dengan menyenangkan dan interaktif. <br/> Tech Stack: Next.JS, Postgres, NextAuth, Tailwindcss",
@@ -102,6 +110,14 @@ export const projectData = [
         github: "https://github.com/Frisyk/next-mongo"
     },
     {
+        id:10,
+        title: "Open Music API",
+        desc: "API lengkap dengan CRUD, authentikasi, dan fitur upload. <br/> Tech Stack: Hapi.JS, Node.JS, PostgreSQL, JavaScript",
+        image: "/project/back.png",
+        slug: "",
+        github: "https://github.com/Frisyk/open-music-API"
+    },
+    {
         id:9,
         title: "Threads App",
         desc: "Forum bertanya dan berkomentar dengan fitur CRUD dan authentikasi. <br/> Tech Stack: React.JS, Redux",
@@ -116,6 +132,14 @@ export const projectData = [
         image: "/project/hafalan.png",
         slug: "https://hafalanq.vercel.app/",
         github: "https://github.com/Frisyk/memorization-test"
+    },
+    {
+        id:18,
+        title: "Express.js API",
+        desc: "API CRUD dengan menggunakan express.js. <br/> Tech Stack: Express.JS, Node.JS, EJS, JavaScript",
+        image: "/project/back.png",
+        slug: "",
+        github: "https://github.com/Frisyk/express.js"
     },
     {
         id:8,
