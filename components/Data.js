@@ -78,6 +78,14 @@ export const catalogData = [
 
 export const projectData = [
     {
+        id:3,
+        title: "Fullstack E-Commerce App - LuxeMarket",
+        desc: "LuxeMarket adalah platform e-commerce modern yang di dalamnya terdapat fitur-fitur seperti penelusuran katalog produk, fungsionalitas keranjang belanja, dan autentikasi pengguna. Administrator dapat mengelola produk, kategori, dan pesanan melalui dasbor admin. <br/> Tech Stack: Next.JS, Supabase, Zustand, Shadcn-UI, Tailwindcss, TypeScriptUI",
+        image: "/project/e-commerce.png",
+        slug: "https://fris-commerce.vercel.app/",
+        github: "https://github.com/Frisyk/tech-ecommerce"
+    },
+    {
         id:10,
         title: "Chatbot UKM Maju App",
         desc: "Chatbot yang dapat menjawab pertanyaan tentang permasalahan UKM. <br/> Tech Stack: Next.JS, Llama 3, NextAuth, Tailwindcss, TypeScript",
