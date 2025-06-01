@@ -65,7 +65,7 @@ export default function AboutPage() {
                         transition={{ duration: 0.4, delay: 0.8 }}
                     >
                         <Link
-                            href="https://drive.google.com/file/d/184YgoIMMOACat1Mo8lp4CILgvvXMoD5S/view?usp=drive_link"
+                            href="https://drive.google.com/file/d/1etucU2A9PSaP4cOPeHyvjHJ5HGbI8m5l/view?usp=sharing"
                             className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-full text-center text-lg font-semibold transition duration-300 shadow-md hover:shadow-lg"
                             target="_blank"
                         >
