@@ -3,6 +3,7 @@ import './globals.css'
 import { Poppins } from 'next/font/google'
 import Footer from '@/components/Footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import TawkToChat from '@/components/TawkToChat'
 
 const inter = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900', '100', '200', '300'] })
 
@@ -64,6 +65,7 @@ export default function RootLayout({ children }) {
           <Header />
           <main className='md:mt-20'>{children}</main>
           {/* <Footer /> */}
+          <TawkToChat />
         </ThemeProvider>
       </body>
     </html>
