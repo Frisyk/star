@@ -4,7 +4,7 @@ import * as THREE from 'three'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
-export default function ThreeBackground() {
+export default function ThreeExperience() {
   const containerRef = useRef(null)
 
   useEffect(() => {
@@ -91,6 +91,10 @@ export default function ThreeBackground() {
         // Rotate Particles
         particles.rotation.y = -mouseX * 0.0002
         particles.rotation.x = -mouseY * 0.0002
+
+        // Pulse effect
+        // torus.scale.x = 1 + Math.sin(elapsedTime * 0.5) * 0.05
+        // torus.scale.y = 1 + Math.sin(elapsedTime * 0.5) * 0.05
 
         renderer.render(scene, camera)
         requestAnimationFrame(animate)

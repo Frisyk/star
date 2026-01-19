@@ -5,8 +5,8 @@ import Image from 'next/image';
 import { catalogData } from '@/components/Data';
 import { motion } from 'framer-motion';
 import { GalleryModal } from '@/components/GalleryModal';
-
-
+import ForestScene from '@/components/ForestScene';
+import TiltCard from '@/components/TiltCard';
 
 export default function GalleryPage() {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -36,42 +36,60 @@ export default function GalleryPage() {
   };
 
   return (
-    <main className="min-h-screen w-full overflow-hidden bg-gray-50 dark:bg-gray-900 py-8 px-4">
-      <motion.h1
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="text-4xl font-bold text-center text-blue-800 dark:text-blue-400 mb-10"
-      >
-        My Gallery
-      </motion.h1>
+    <main className="min-h-screen w-full relative overflow-hidden bg-gray-900 text-white">
+      <ForestScene />
       
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {catalogData.map((item, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 50 }}
+      <div className="relative z-10 py-24 px-4 container mx-auto">
+        <motion.div
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.05 }}
-            whileHover={{ scale: 1.03 }}
-            className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md cursor-pointer transform transition-all duration-300 hover:shadow-xl"
-            onClick={() => openModal(item, index)}
-          >
-            <div className="relative h-64 w-full">
-              <Image
-                src={item.photo}
-                alt={item.name}
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="p-4">
-              <h2 className="text-lg font-medium text-gray-800 dark:text-white text-center">
-                {item.name}
-              </h2>
-            </div>
-          </motion.div>
-        ))}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+        >
+            <h1 className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500 mb-4 drop-shadow-lg">
+                My Gallery
+            </h1>
+            <p className="text-gray-300 max-w-2xl mx-auto text-lg backdrop-blur-sm bg-black/30 p-4 rounded-xl border border-white/10">
+                A collection of moments and creations.
+            </p>
+        </motion.div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {catalogData.map((item, index) => (
+            <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50, rotateX: 10 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+                className="perspective-1000"
+            >
+                <TiltCard>
+                    <div 
+                        className="bg-gray-800/60 backdrop-blur-md rounded-xl overflow-hidden shadow-2xl border border-white/10 cursor-pointer group h-full"
+                        onClick={() => openModal(item, index)}
+                    >
+                        <div className="relative h-64 w-full overflow-hidden">
+                            <Image
+                                src={item.photo}
+                                alt={item.name}
+                                fill
+                                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
+                                <span className="text-white font-medium px-4 py-2 border border-white/30 rounded-full backdrop-blur-sm bg-black/30">View Image</span>
+                            </div>
+                        </div>
+                        <div className="p-4 relative overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <h2 className="text-lg font-medium text-gray-200 text-center relative z-10 group-hover:text-white transition-colors">
+                                {item.name}
+                            </h2>
+                        </div>
+                    </div>
+                </TiltCard>
+            </motion.div>
+            ))}
+        </div>
       </div>
       
       <GalleryModal 
