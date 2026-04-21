@@ -72,7 +72,7 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gray-900 text-white">
+    <div className="min-h-screen relative overflow-hidden bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
       <ForestScene />
 
       <div className="relative z-10 pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -82,10 +82,10 @@ export default function ContactPage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h1 className="text-4xl sm:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 mb-6 drop-shadow-sm">
+          <h1 className="text-4xl sm:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-500 mb-6 drop-shadow-sm">
             Get In Touch
           </h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto backdrop-blur-sm bg-black/20 p-4 rounded-xl border border-white/5">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto backdrop-blur-sm bg-white/30 dark:bg-black/20 p-4 rounded-xl border border-gray-200 dark:border-white/5">
             Interested in collaborating? Have questions? Don&apos;t hesitate to reach out. I&apos;m always open to discussing new projects and opportunities.
           </p>
         </motion.div>
@@ -96,9 +96,9 @@ export default function ContactPage() {
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-gray-800/50 backdrop-blur-xl rounded-2xl shadow-2xl p-8 border border-white/10"
+            className="bg-white/70 dark:bg-gray-800/50 backdrop-blur-xl rounded-2xl shadow-2xl p-8 border border-gray-200 dark:border-white/10"
           >
-            <h2 className="text-2xl font-semibold text-white mb-6 flex items-center gap-2">
+            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
                 <span className="w-1 h-8 bg-blue-500 rounded-full"></span>
                 Send Message
             </h2>
@@ -106,7 +106,7 @@ export default function ContactPage() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Name
                     </label>
                     <input
@@ -116,12 +116,12 @@ export default function ContactPage() {
                     value={formState.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-900/50 text-white transition-all outline-none"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 dark:bg-gray-900/50 text-gray-900 dark:text-white transition-all outline-none"
                     placeholder="John Doe"
                     />
                 </div>
                 <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Email
                     </label>
                     <input
@@ -131,14 +131,14 @@ export default function ContactPage() {
                     value={formState.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-900/50 text-white transition-all outline-none"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 dark:bg-gray-900/50 text-gray-900 dark:text-white transition-all outline-none"
                     placeholder="john@example.com"
                     />
                 </div>
               </div>
               
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Message
                 </label>
                 <textarea
@@ -148,7 +148,7 @@ export default function ContactPage() {
                   onChange={handleChange}
                   required
                   rows={6}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-900/50 text-white transition-all outline-none resize-none"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 dark:bg-gray-900/50 text-gray-900 dark:text-white transition-all outline-none resize-none"
                   placeholder="Tell me about your project..."
                 ></textarea>
               </div>
@@ -175,7 +175,7 @@ export default function ContactPage() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="mt-4 p-3 bg-green-500/20 border border-green-500/50 rounded-lg text-green-300 text-center"
+                    className="mt-4 p-3 bg-green-500/20 border border-green-500/50 rounded-lg text-green-600 dark:text-green-300 text-center"
                   >
                     Thank you! Your email client has been opened.
                   </motion.div>
@@ -191,8 +191,8 @@ export default function ContactPage() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="space-y-8"
           >
-            <div className="bg-gray-800/50 backdrop-blur-xl rounded-2xl shadow-xl p-8 border border-white/10">
-                <h2 className="text-2xl font-semibold text-white mb-8 flex items-center gap-2">
+            <div className="bg-white/70 dark:bg-gray-800/50 backdrop-blur-xl rounded-2xl shadow-xl p-8 border border-gray-200 dark:border-white/10">
+                <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-8 flex items-center gap-2">
                     <span className="w-1 h-8 bg-purple-500 rounded-full"></span>
                     Connect With Me
                 </h2>
@@ -205,14 +205,14 @@ export default function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.02, x: 5 }}
-                    className="flex items-center gap-5 p-4 rounded-xl bg-gray-900/50 border border-gray-700 hover:border-blue-500/50 hover:bg-gray-800/80 transition-all duration-300 group"
+                    className="flex items-center gap-5 p-4 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 hover:border-blue-500/50 hover:bg-white dark:hover:bg-gray-800/80 transition-all duration-300 group shadow-sm hover:shadow-md"
                     >
-                        <div className="text-3xl p-3 bg-gray-800 rounded-lg group-hover:bg-gray-700 transition-colors">
+                        <div className="text-3xl p-3 bg-white dark:bg-gray-800 rounded-lg group-hover:bg-gray-100 dark:group-hover:bg-gray-700 transition-colors border border-gray-100 dark:border-gray-600 shadow-sm">
                             {info.icon}
                         </div>
                         <div>
-                            <p className="text-sm text-gray-400 mb-1">{info.label}</p>
-                            <p className="text-lg text-white font-medium group-hover:text-blue-400 transition-colors">{info.text}</p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{info.label}</p>
+                            <p className="text-lg text-gray-900 dark:text-white font-medium group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{info.text}</p>
                         </div>
                     </motion.a>
                 ))}
@@ -220,11 +220,11 @@ export default function ContactPage() {
             </div>
             
             <motion.div 
-                className="bg-gradient-to-br from-blue-900/40 to-purple-900/40 backdrop-blur-md p-8 rounded-2xl border border-white/10 text-center"
+                className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/40 dark:to-purple-900/40 backdrop-blur-md p-8 rounded-2xl border border-blue-100 dark:border-white/10 text-center shadow-lg"
                 whileHover={{ scale: 1.02 }}
             >
-              <h3 className="text-xl font-bold text-white mb-2">Based in Yogyakarta</h3>
-              <p className="text-gray-300">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Based in Yogyakarta</h3>
+              <p className="text-gray-600 dark:text-gray-300">
                 Open to remote work and global opportunities.
               </p>
             </motion.div>
@@ -233,4 +233,5 @@ export default function ContactPage() {
       </div>
     </div>
   );
+
 }

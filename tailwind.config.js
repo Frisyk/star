@@ -10,9 +10,10 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        // 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        // 'gradient-conic':
+        //   'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'radial-gradient': 'radial-gradient(var(--tw-gradient-stops))',
       },
       animation: {
         gradientmove : 'gradientmove 3s ease infinite',
@@ -48,5 +49,16 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        '.perspective-2000': {
+          perspective: '2000px',
+        },
+        '.perspective-2500': {
+          perspective: '2500px',
+        },
+      })
+    },
+  ],
 }

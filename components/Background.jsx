@@ -4,15 +4,19 @@ import * as THREE from 'three'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
+import { useDarkMode } from './DarkModeProvider'
+
 export default function ThreeBackground() {
   const containerRef = useRef(null)
+  const isDarkMode = useDarkMode()
 
   useEffect(() => {
     if (!containerRef.current) return
 
     // Scene setup
     const scene = new THREE.Scene()
-    scene.background = new THREE.Color(0x050505)
+    const bgColor = isDarkMode ? 0x050505 : 0xf9fafb
+    scene.background = new THREE.Color(bgColor)
 
     // Camera
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
@@ -26,14 +30,14 @@ export default function ThreeBackground() {
 
     // --- Objects ---
 
-    // 1. Torus Geometry (The main ring)
+    // 1. Torus Geometry
     const torusGeometry = new THREE.TorusGeometry(10, 3, 16, 100)
     const torusMaterial = new THREE.PointsMaterial({
         size: 0.05,
-        color: 0x00aaff,
+        color: isDarkMode ? 0x00aaff : 0x2563eb,
         transparent: true,
         opacity: 0.8,
-        blending: THREE.AdditiveBlending
+        blending: isDarkMode ? THREE.AdditiveBlending : THREE.NormalBlending
     })
     const torus = new THREE.Points(torusGeometry, torusMaterial)
     scene.add(torus)
@@ -50,7 +54,7 @@ export default function ThreeBackground() {
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3))
     const particlesMaterial = new THREE.PointsMaterial({
         size: 0.03,
-        color: 0xffffff,
+        color: isDarkMode ? 0xffffff : 0x6b7280,
         transparent: true,
         opacity: 0.4
     })
@@ -60,7 +64,6 @@ export default function ThreeBackground() {
     // Interaction State
     let mouseX = 0
     let mouseY = 0
-    
     const windowHalfX = window.innerWidth / 2
     const windowHalfY = window.innerHeight / 2
 
@@ -68,47 +71,38 @@ export default function ThreeBackground() {
         mouseX = (event.clientX - windowHalfX)
         mouseY = (event.clientY - windowHalfY)
     }
-
     document.addEventListener('mousemove', handleMouseMove)
 
     // Animation Loop
-    const clock = new THREE.Clock()
-
     const animate = () => {
-        const elapsedTime = clock.getElapsedTime()
+        const animationId = requestAnimationFrame(animate)
 
-        // Rotate Torus
         torus.rotation.y += 0.005
         torus.rotation.x += 0.002
         
-        // Interactive Rotation based on mouse
         const targetRotationX = mouseY * 0.0005
         const targetRotationY = mouseX * 0.0005
         
         torus.rotation.x += 0.05 * (targetRotationX - torus.rotation.x)
         torus.rotation.y += 0.05 * (targetRotationY - torus.rotation.y)
 
-        // Rotate Particles
         particles.rotation.y = -mouseX * 0.0002
         particles.rotation.x = -mouseY * 0.0002
 
         renderer.render(scene, camera)
-        requestAnimationFrame(animate)
+        return animationId
     }
+    const animationId = animate()
 
-    animate()
-
-    // Resize Handler
     const handleResize = () => {
         camera.aspect = window.innerWidth / window.innerHeight
         camera.updateProjectionMatrix()
         renderer.setSize(window.innerWidth, window.innerHeight)
     }
-
     window.addEventListener('resize', handleResize)
 
-    // Cleanup
     return () => {
+        cancelAnimationFrame(animationId)
         window.removeEventListener('resize', handleResize)
         document.removeEventListener('mousemove', handleMouseMove)
         if (containerRef.current && renderer.domElement) {
@@ -118,11 +112,12 @@ export default function ThreeBackground() {
         torusMaterial.dispose()
         particlesGeometry.dispose()
         particlesMaterial.dispose()
+        renderer.dispose()
     }
-  }, [])
+  }, [isDarkMode])
 
   return (
-    <div className="relative w-full h-screen bg-black overflow-hidden">
+    <div className="relative w-full h-screen bg-white dark:bg-black overflow-hidden transition-colors duration-500">
       <div ref={containerRef} className="absolute inset-0 z-0" />
       
       {/* Overlay Content */}
@@ -131,20 +126,26 @@ export default function ThreeBackground() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.5 }}
-            className="text-center p-6 bg-black/30 backdrop-blur-sm rounded-xl border border-white/10"
+            className="text-center p-6 md:p-12 bg-white/30 dark:bg-black/30 backdrop-blur-md rounded-3xl border border-white/20 dark:border-white/10 shadow-2xl"
         >
-            <h1 className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 mb-4">
-                Interactive 3D World
+            <h1 className="text-4xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-500 mb-6 uppercase tracking-tighter">
+                3D Experience
             </h1>
-            <p className="text-gray-300 text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-                Explore the digital dimension. Move your mouse to interact with the universe.
+            <p className="text-gray-700 dark:text-gray-300 text-lg md:text-2xl mb-10 max-w-2xl mx-auto font-medium">
+                Explore the intersection of art and code in this interactive 3D universe.
             </p>
-            <div className="pointer-events-auto">
+            <div className="pointer-events-auto flex flex-wrap justify-center gap-4">
                 <Link 
                     href="/projects" 
-                    className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-[0_0_20px_rgba(37,99,235,0.5)]"
+                    className="px-10 py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-2xl font-bold transition-all duration-300 hover:scale-105 shadow-xl"
                 >
-                    View My Projects
+                    Explore Projects
+                </Link>
+                <Link 
+                    href="/" 
+                    className="px-10 py-4 bg-transparent border-2 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl font-bold transition-all duration-300 hover:border-blue-500"
+                >
+                    Back Home
                 </Link>
             </div>
         </motion.div>

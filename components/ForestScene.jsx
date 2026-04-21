@@ -1,16 +1,24 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
+import { useDarkMode } from './DarkModeProvider'
 
 export default function ForestScene() {
   const containerRef = useRef(null)
+  const isDarkMode = useDarkMode()
 
   useEffect(() => {
     if (!containerRef.current) return
 
+    // Colors based on theme
+    const fogColor = isDarkMode ? 0x111827 : 0xf3f4f6
+    const groundColor = isDarkMode ? 0x1f2937 : 0x9ca3af
+    const lightColor = isDarkMode ? 0xaaccff : 0xffffff
+    const ambientColor = isDarkMode ? 0x404040 : 0xffffff
+
     // Scene
     const scene = new THREE.Scene()
-    scene.fog = new THREE.FogExp2(0x111827, 0.002) // Dark blueish fog matches dark mode
+    scene.fog = new THREE.FogExp2(fogColor, 0.002)
 
     // Camera
     const camera = new THREE.PerspectiveCamera(60, containerRef.current.clientWidth / containerRef.current.clientHeight, 0.1, 1000)
@@ -24,20 +32,20 @@ export default function ForestScene() {
     containerRef.current.appendChild(renderer.domElement)
 
     // Lights
-    const ambientLight = new THREE.AmbientLight(0x404040, 2)
+    const ambientLight = new THREE.AmbientLight(ambientColor, isDarkMode ? 2 : 1)
     scene.add(ambientLight)
 
-    const moonLight = new THREE.DirectionalLight(0xaaccff, 0.5)
-    moonLight.position.set(10, 20, 10)
-    scene.add(moonLight)
+    const mainLight = new THREE.DirectionalLight(lightColor, isDarkMode ? 0.5 : 1)
+    mainLight.position.set(10, 20, 10)
+    scene.add(mainLight)
 
     // Ground
     const groundGeometry = new THREE.PlaneGeometry(200, 200, 50, 50)
     const groundMaterial = new THREE.MeshStandardMaterial({ 
-        color: 0x1f2937, // dark gray
+        color: groundColor,
         wireframe: true,
         transparent: true,
-        opacity: 0.3
+        opacity: isDarkMode ? 0.3 : 0.1
     })
     const ground = new THREE.Mesh(groundGeometry, groundMaterial)
     ground.rotation.x = -Math.PI / 2
@@ -47,7 +55,6 @@ export default function ForestScene() {
     for (let i = 0; i < positionAttribute.count; i++) {
         const x = positionAttribute.getX(i)
         const y = positionAttribute.getY(i)
-        // Simple noise function replacement
         const z = Math.sin(x * 0.1) * Math.cos(y * 0.1) * 2
         positionAttribute.setZ(i, z)
     }
@@ -57,7 +64,10 @@ export default function ForestScene() {
 
     // Trees (Simple Cones)
     const treeGeometry = new THREE.ConeGeometry(1, 4, 8)
-    const treeMaterial = new THREE.MeshStandardMaterial({ color: 0x064e3b, flatShading: true }) // Dark green
+    const treeMaterial = new THREE.MeshStandardMaterial({ 
+        color: isDarkMode ? 0x064e3b : 0x10b981, 
+        flatShading: true 
+    })
     
     const trees = []
     for(let i = 0; i < 50; i++) {
@@ -65,7 +75,6 @@ export default function ForestScene() {
         const x = (Math.random() - 0.5) * 100
         const z = (Math.random() - 0.5) * 100
         
-        // Avoid center path
         if(Math.abs(x) < 5) continue
         
         tree.position.set(x, 2, z)
@@ -74,7 +83,7 @@ export default function ForestScene() {
         trees.push(tree)
     }
 
-    // Particles (Fireflies)
+    // Particles (Fireflies/Dust)
     const particlesGeometry = new THREE.BufferGeometry()
     const particlesCount = 200
     const posArray = new Float32Array(particlesCount * 3)
@@ -86,7 +95,7 @@ export default function ForestScene() {
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3))
     const particlesMaterial = new THREE.PointsMaterial({
         size: 0.2,
-        color: 0xfef08a, // yellow
+        color: isDarkMode ? 0xfef08a : 0x3b82f6,
         transparent: true,
         opacity: 0.8
     })
@@ -106,19 +115,18 @@ export default function ForestScene() {
 
     // Animation
     const animate = () => {
-        requestAnimationFrame(animate)
+        const animationId = requestAnimationFrame(animate)
 
-        // Camera gentle movement
         camera.position.x += (mouseX * 5 - camera.position.x) * 0.05
         camera.position.y += (-mouseY * 2 + 5 - camera.position.y) * 0.05
         camera.lookAt(0, 2, 0)
 
-        // Particles float
         particles.rotation.y += 0.001
 
         renderer.render(scene, camera)
+        return animationId
     }
-    animate()
+    const animationId = animate()
 
     // Resize
     const handleResize = () => {
@@ -130,6 +138,7 @@ export default function ForestScene() {
     window.addEventListener('resize', handleResize)
 
     return () => {
+        cancelAnimationFrame(animationId)
         window.removeEventListener('resize', handleResize)
         document.removeEventListener('mousemove', handleMouseMove)
         if (containerRef.current && renderer.domElement) {
@@ -141,10 +150,11 @@ export default function ForestScene() {
         treeMaterial.dispose()
         particlesGeometry.dispose()
         particlesMaterial.dispose()
+        renderer.dispose()
     }
-  }, [])
+  }, [isDarkMode])
 
   return (
-    <div ref={containerRef} className="absolute inset-0 -z-10 w-full h-full opacity-50 dark:opacity-80" />
+    <div ref={containerRef} className="absolute inset-0 -z-10 w-full h-full opacity-50 dark:opacity-80 transition-opacity duration-1000" />
   )
 }

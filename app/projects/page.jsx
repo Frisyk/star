@@ -9,6 +9,11 @@ import { ProjectModal } from '@/components/ProjectModal';
 import { motion } from 'framer-motion';
 import TiltCard from '@/components/TiltCard';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, FreeMode } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/free-mode';
+
 export default function ProjectsPage() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,92 +27,166 @@ export default function ProjectsPage() {
     setIsModalOpen(false);
   };
 
+  // Split projects into two rows for variety
+  const firstRow = projectData.slice(0, Math.ceil(projectData.length / 2));
+  const secondRow = projectData.slice(Math.ceil(projectData.length / 2));
+
   return (
-    <main className="min-h-screen w-full bg-gray-50 dark:bg-gray-900 py-24 px-4 overflow-hidden perspective-1000">
-      <div className="max-w-7xl mx-auto">
+    <main className="min-h-screen w-full bg-white dark:bg-gray-900 py-24 px-4 overflow-hidden transition-colors duration-500">
+      <div className="max-w-screen-2xl mx-auto">
         <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.8 }}
             className="text-center mb-16"
         >
-            <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-4">
+            <span className="inline-block px-4 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-bold text-sm mb-4 uppercase tracking-wider">
+                My Work
+            </span>
+            <h1 className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white mb-6">
                 Featured Projects
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                Explore a collection of my recent work, ranging from web applications to interactive experiences. Interact with the cards to see the 3D effect.
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">
+                A selection of my recent full-stack applications and technical experiments.
             </p>
         </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projectData.map((project, index) => (
+        <div className="space-y-12">
+            {/* First Row Slider */}
             <motion.div
-                key={project.id}
-                initial={{ opacity: 0, scale: 0.9, y: 50 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="h-full"
+                initial={{ opacity: 0, x: -100 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
             >
-                <TiltCard className="h-full">
-                    <div 
-                        onClick={() => openModal(project)} 
-                        className="h-full bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden cursor-pointer group border border-gray-200 dark:border-gray-700"
-                    >
-                        {/* Image Container */}
-                        <div className="relative h-60 w-full overflow-hidden">
-                            <Image
-                                src={project.image}
-                                alt={project.title}
-                                fill
-                                className="object-cover transition-transform duration-500 group-hover:scale-110"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4">
-                                <span className="text-white font-medium text-sm">View Details</span>
-                            </div>
-                        </div>
-
-                        {/* Content */}
-                        <div className="p-6 flex flex-col h-[calc(100%-15rem)]">
-                            <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2 line-clamp-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                                {project.title}
-                            </h3>
-                            <p
-                                className="text-gray-600 dark:text-gray-300 text-sm line-clamp-2 mb-4 flex-grow"
-                                dangerouslySetInnerHTML={{ __html: project.desc.split('<br/>')[0] || '' }}
-                            ></p>
-                            
-                            <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
-                                <div className="flex gap-3">
-                                    <Link
-                                        href={project.github}
-                                        target="_blank"
-                                        onClick={(e) => e.stopPropagation()}
-                                        className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
-                                        title="View Source Code"
-                                    >
-                                        <BsGithub size={20} />
-                                    </Link>
-                                    {project.slug && (
-                                        <Link
-                                            href={project.slug}
-                                            target="_blank"
-                                            onClick={(e) => e.stopPropagation()}
-                                            className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                                            title="Live Demo"
-                                        >
-                                            <BsGlobe size={20} />
-                                        </Link>
-                                    )}
+                <Swiper
+                    modules={[Autoplay, FreeMode]}
+                    spaceBetween={30}
+                    slidesPerView={1.2}
+                    loop={true}
+                    freeMode={true}
+                    speed={8000}
+                    autoplay={{
+                        delay: 0,
+                        disableOnInteraction: false,
+                        reverseDirection: false
+                    }}
+                    breakpoints={{
+                        640: { slidesPerView: 2 },
+                        1024: { slidesPerView: 3 },
+                        1536: { slidesPerView: 4 },
+                    }}
+                    className="pb-10 linear-swiper"
+                >
+                    {firstRow.map((project) => (
+                        <SwiperSlide key={project.id} className="h-full">
+                            <TiltCard className="h-full">
+                                <div 
+                                    onClick={() => openModal(project)} 
+                                    className="h-[450px] bg-gray-50 dark:bg-gray-800/50 rounded-3xl shadow-xl overflow-hidden cursor-pointer group border border-gray-100 dark:border-white/5 transition-all duration-500 hover:shadow-blue-500/10"
+                                >
+                                    <div className="relative h-64 w-full overflow-hidden">
+                                        <Image
+                                            src={project.image}
+                                            alt={project.title}
+                                            fill
+                                            className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                                            <span className="text-white font-bold bg-blue-600 px-4 py-2 rounded-xl text-sm shadow-lg">View Project</span>
+                                        </div>
+                                    </div>
+                                    <div className="p-8">
+                                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-1 group-hover:text-blue-600 transition-colors">
+                                            {project.title}
+                                        </h3>
+                                        <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3 mb-6 leading-relaxed">
+                                            {project.desc.replace(/<br\/>/g, ' ')}
+                                        </p>
+                                        <div className="flex gap-4">
+                                            <div className="w-8 h-8 rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-400">
+                                                <BsGithub size={18} />
+                                            </div>
+                                            {project.slug && (
+                                                <div className="w-8 h-8 rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-blue-500">
+                                                    <BsGlobe size={18} />
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
-                                <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded-md">
-                                    Project #{project.id}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </TiltCard>
+                            </TiltCard>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
             </motion.div>
-            ))}
+
+            {/* Second Row Slider (Reversed) */}
+            <motion.div
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+            >
+                <Swiper
+                    modules={[Autoplay, FreeMode]}
+                    spaceBetween={30}
+                    slidesPerView={1.2}
+                    loop={true}
+                    freeMode={true}
+                    speed={10000}
+                    autoplay={{
+                        delay: 0,
+                        disableOnInteraction: false,
+                        reverseDirection: true
+                    }}
+                    breakpoints={{
+                        640: { slidesPerView: 2 },
+                        1024: { slidesPerView: 3 },
+                        1536: { slidesPerView: 4 },
+                    }}
+                    className="linear-swiper"
+                >
+                    {secondRow.map((project) => (
+                        <SwiperSlide key={project.id} className="h-full">
+                            <TiltCard className="h-full">
+                                <div 
+                                    onClick={() => openModal(project)} 
+                                    className="h-[450px] bg-gray-50 dark:bg-gray-800/50 rounded-3xl shadow-xl overflow-hidden cursor-pointer group border border-gray-100 dark:border-white/5 transition-all duration-500 hover:shadow-purple-500/10"
+                                >
+                                    <div className="relative h-64 w-full overflow-hidden">
+                                        <Image
+                                            src={project.image}
+                                            alt={project.title}
+                                            fill
+                                            className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                                            <span className="text-white font-bold bg-purple-600 px-4 py-2 rounded-xl text-sm shadow-lg">View Project</span>
+                                        </div>
+                                    </div>
+                                    <div className="p-8">
+                                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-1 group-hover:text-purple-600 transition-colors">
+                                            {project.title}
+                                        </h3>
+                                        <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3 mb-6 leading-relaxed">
+                                            {project.desc.replace(/<br\/>/g, ' ')}
+                                        </p>
+                                        <div className="flex gap-4">
+                                            <div className="w-8 h-8 rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-400">
+                                                <BsGithub size={18} />
+                                            </div>
+                                            {project.slug && (
+                                                <div className="w-8 h-8 rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-purple-500">
+                                                    <BsGlobe size={18} />
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </TiltCard>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </motion.div>
         </div>
       </div>
       
