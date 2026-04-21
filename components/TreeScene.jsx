@@ -6,20 +6,21 @@ export default function TreeScene({ mode = 0 }) {
   const containerRef = useRef(null)
 
   useEffect(() => {
-    if (!containerRef.current) return
+    const currentContainer = containerRef.current
+    if (!currentContainer) return
 
     // --- Scene Setup ---
     const scene = new THREE.Scene()
     scene.background = null 
 
-    const camera = new THREE.PerspectiveCamera(45, containerRef.current.clientWidth / containerRef.current.clientHeight, 0.1, 1000)
+    const camera = new THREE.PerspectiveCamera(45, currentContainer.clientWidth / currentContainer.clientHeight, 0.1, 1000)
     camera.position.set(0, 2, 8)
     camera.lookAt(0, 1, 0)
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
-    renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight)
+    renderer.setSize(currentContainer.clientWidth, currentContainer.clientHeight)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    containerRef.current.appendChild(renderer.domElement)
+    currentContainer.appendChild(renderer.domElement)
 
     // --- Lighting ---
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.6)
@@ -136,10 +137,10 @@ export default function TreeScene({ mode = 0 }) {
     const animationId = animate()
 
     const handleResize = () => {
-        if (!containerRef.current) return
-        camera.aspect = containerRef.current.clientWidth / containerRef.current.clientHeight
+        if (!currentContainer) return
+        camera.aspect = currentContainer.clientWidth / currentContainer.clientHeight
         camera.updateProjectionMatrix()
-        renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight)
+        renderer.setSize(currentContainer.clientWidth, currentContainer.clientHeight)
     }
     window.addEventListener('resize', handleResize)
 
@@ -147,8 +148,8 @@ export default function TreeScene({ mode = 0 }) {
         cancelAnimationFrame(animationId)
         window.removeEventListener('resize', handleResize)
         document.removeEventListener('mousemove', handleMouseMove)
-        if (containerRef.current && renderer.domElement) {
-            containerRef.current.removeChild(renderer.domElement)
+        if (currentContainer && renderer.domElement) {
+            currentContainer.removeChild(renderer.domElement)
         }
         scene.traverse(obj => {
           if(obj.geometry) obj.geometry.dispose()

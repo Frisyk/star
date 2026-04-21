@@ -27,6 +27,77 @@ const technologies = [
   { name: "Laravel", icon: <SiLaravel />, color: "text-red-500", glow: "border-red-500" },
 ];
 
+function getGlowColor(textColorClass) {
+    if (textColorClass.includes('blue-400')) return 'rgba(96, 165, 250, 0.4)';
+    if (textColorClass.includes('blue-500')) return 'rgba(59, 130, 246, 0.4)';
+    if (textColorClass.includes('blue-600')) return 'rgba(37, 99, 235, 0.4)';
+    if (textColorClass.includes('green-500')) return 'rgba(34, 197, 94, 0.4)';
+    if (textColorClass.includes('green-600')) return 'rgba(22, 163, 74, 0.4)';
+    if (textColorClass.includes('yellow-400')) return 'rgba(250, 204, 21, 0.4)';
+    if (textColorClass.includes('cyan-400')) return 'rgba(34, 211, 238, 0.4)';
+    if (textColorClass.includes('purple-500')) return 'rgba(168, 85, 247, 0.4)';
+    if (textColorClass.includes('purple-600')) return 'rgba(147, 51, 234, 0.4)';
+    if (textColorClass.includes('red-500')) return 'rgba(239, 68, 68, 0.4)';
+    if (textColorClass.includes('orange-600')) return 'rgba(234, 88, 12, 0.4)';
+    if (textColorClass.includes('white')) return 'rgba(255, 255, 255, 0.2)';
+    return 'rgba(156, 163, 175, 0.2)';
+}
+
+const TechItem = ({ tech, rotationY, counterRotationY, sphereRadius, hoveredTech, setHoveredTech }) => {
+    const phi = Math.atan2(tech.z, tech.x);
+    const horizontalRadius = Math.sqrt(tech.x * tech.x + tech.z * tech.z);
+
+    const currentZ = useTransform(rotationY, (rY) => {
+        const totalAngleRad = (phi + (rY * Math.PI / 180));
+        return Math.sin(totalAngleRad) * horizontalRadius;
+    });
+
+    const opacity = useTransform(currentZ, [-sphereRadius, sphereRadius], [0.1, 1]);
+    const zIndex = useTransform(currentZ, [-sphereRadius, sphereRadius], [0, 100]);
+    
+    return (
+      <motion.div
+        className="absolute"
+        style={{
+          x: tech.x,
+          y: tech.y,
+          z: tech.z,
+          transformStyle: 'preserve-3d',
+          width: 80,
+          height: 96,
+          marginTop: -48,
+          marginLeft: -40,
+          opacity: opacity,
+          zIndex: zIndex,
+        }}
+      >
+        <motion.div
+          style={{ 
+            rotateY: counterRotationY,
+            transformStyle: 'preserve-3d'
+          }}
+          className="w-full h-full"
+        >
+            <motion.div
+                onMouseEnter={() => setHoveredTech(tech.name)}
+                onMouseLeave={() => setHoveredTech(null)}
+                whileHover={{ scale: 1.3, z: 100 }}
+                className={`w-full h-full bg-gray-900/80 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-700/50 flex flex-col items-center justify-center p-3 cursor-pointer transition-all duration-300 hover:bg-gray-800 hover:border-blue-500/50 group ${hoveredTech === tech.name ? 'ring-2 ring-blue-500/20 shadow-blue-500/10' : ''}`}
+            >
+                <div className={`text-3xl ${tech.color} transition-transform duration-300 group-hover:scale-110`}
+                    style={{ filter: `drop-shadow(0 0 8px ${getGlowColor(tech.color)})` }}
+                >
+                {tech.icon}
+                </div>
+                <span className="text-[9px] mt-3 font-bold text-gray-300 uppercase tracking-tighter truncate w-full text-center group-hover:text-white transition-colors">
+                {tech.name}
+                </span>
+            </motion.div>
+        </motion.div>
+      </motion.div>
+    );
+};
+
 export default function SatelliteTechStack() {
   const [hoveredTech, setHoveredTech] = useState(null)
   const rotationY = useMotionValue(0)
@@ -103,79 +174,19 @@ export default function SatelliteTechStack() {
             </div>
           </div>
 
-          {techPositions.map((tech, i) => {
-            const phi = Math.atan2(tech.z, tech.x);
-            const horizontalRadius = Math.sqrt(tech.x * tech.x + tech.z * tech.z);
-
-            const currentZ = useTransform(rotationY, (rY) => {
-                const totalAngleRad = (phi + (rY * Math.PI / 180));
-                return Math.sin(totalAngleRad) * horizontalRadius;
-            });
-
-            const opacity = useTransform(currentZ, [-sphereRadius, sphereRadius], [0.1, 1]);
-            const zIndex = useTransform(currentZ, [-sphereRadius, sphereRadius], [0, 100]);
-            
-            return (
-              <motion.div
+          {techPositions.map((tech, i) => (
+            <TechItem 
                 key={i}
-                className="absolute"
-                style={{
-                  x: tech.x,
-                  y: tech.y,
-                  z: tech.z,
-                  transformStyle: 'preserve-3d',
-                  width: 80,
-                  height: 96,
-                  marginTop: -48,
-                  marginLeft: -40,
-                  opacity: opacity,
-                  zIndex: zIndex,
-                }}
-              >
-                <motion.div
-                  style={{ 
-                    rotateY: counterRotationY,
-                    transformStyle: 'preserve-3d'
-                  }}
-                  className="w-full h-full"
-                >
-                    <motion.div
-                        onMouseEnter={() => setHoveredTech(tech.name)}
-                        onMouseLeave={() => setHoveredTech(null)}
-                        whileHover={{ scale: 1.3, z: 100 }}
-                        className={`w-full h-full bg-gray-900/80 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-700/50 flex flex-col items-center justify-center p-3 cursor-pointer transition-all duration-300 hover:bg-gray-800 hover:border-blue-500/50 group ${hoveredTech === tech.name ? 'ring-2 ring-blue-500/20 shadow-blue-500/10' : ''}`}
-                    >
-                        <div className={`text-3xl ${tech.color} transition-transform duration-300 group-hover:scale-110`}
-                            style={{ filter: `drop-shadow(0 0 8px ${getGlowColor(tech.color)})` }}
-                        >
-                        {tech.icon}
-                        </div>
-                        <span className="text-[9px] mt-3 font-bold text-gray-300 uppercase tracking-tighter truncate w-full text-center group-hover:text-white transition-colors">
-                        {tech.name}
-                        </span>
-                    </motion.div>
-                </motion.div>
-              </motion.div>
-            )
-          })}
+                tech={tech}
+                rotationY={rotationY}
+                counterRotationY={counterRotationY}
+                sphereRadius={sphereRadius}
+                hoveredTech={hoveredTech}
+                setHoveredTech={setHoveredTech}
+            />
+          ))}
         </motion.div>
       </div>
     </div>
   )
-}
-
-function getGlowColor(textColorClass) {
-    if (textColorClass.includes('blue-400')) return 'rgba(96, 165, 250, 0.4)';
-    if (textColorClass.includes('blue-500')) return 'rgba(59, 130, 246, 0.4)';
-    if (textColorClass.includes('blue-600')) return 'rgba(37, 99, 235, 0.4)';
-    if (textColorClass.includes('green-500')) return 'rgba(34, 197, 94, 0.4)';
-    if (textColorClass.includes('green-600')) return 'rgba(22, 163, 74, 0.4)';
-    if (textColorClass.includes('yellow-400')) return 'rgba(250, 204, 21, 0.4)';
-    if (textColorClass.includes('cyan-400')) return 'rgba(34, 211, 238, 0.4)';
-    if (textColorClass.includes('purple-500')) return 'rgba(168, 85, 247, 0.4)';
-    if (textColorClass.includes('purple-600')) return 'rgba(147, 51, 234, 0.4)';
-    if (textColorClass.includes('red-500')) return 'rgba(239, 68, 68, 0.4)';
-    if (textColorClass.includes('orange-600')) return 'rgba(234, 88, 12, 0.4)';
-    if (textColorClass.includes('white')) return 'rgba(255, 255, 255, 0.2)';
-    return 'rgba(156, 163, 175, 0.2)';
 }

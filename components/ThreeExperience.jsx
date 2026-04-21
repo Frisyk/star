@@ -8,7 +8,8 @@ export default function ThreeExperience() {
   const containerRef = useRef(null)
 
   useEffect(() => {
-    if (!containerRef.current) return
+    const currentContainer = containerRef.current
+    if (!currentContainer) return
 
     // Scene setup
     const scene = new THREE.Scene()
@@ -22,7 +23,7 @@ export default function ThreeExperience() {
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    containerRef.current.appendChild(renderer.domElement)
+    currentContainer.appendChild(renderer.domElement)
 
     // --- Objects ---
 
@@ -115,8 +116,8 @@ export default function ThreeExperience() {
     return () => {
         window.removeEventListener('resize', handleResize)
         document.removeEventListener('mousemove', handleMouseMove)
-        if (containerRef.current && renderer.domElement) {
-            containerRef.current.removeChild(renderer.domElement)
+        if (currentContainer && renderer.domElement) {
+            currentContainer.removeChild(renderer.domElement)
         }
         torusGeometry.dispose()
         torusMaterial.dispose()

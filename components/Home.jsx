@@ -6,8 +6,9 @@ import { MdOutlineAttachEmail } from "react-icons/md";
 import TreeScene from "./TreeScene";
 import CustomCursor from "./CustomCursor";
 
+const texts = ["Frisnadi✨", "a Full-stack Developer🚀", "a Software Engineer💻", "an AI Enthusiast🤖"];
+
 export function Home() {
-  const texts = ["Frisnadi✨", "a Full-stack Developer🚀", "a Software Engineer💻", "an AI Enthusiast🤖"];
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -38,93 +39,72 @@ export function Home() {
       </motion.div>
 
       {/* Animated Text Section */}
-      <motion.div
-        className="w-full lg:w-1/2 flex flex-col justify-center px-6 lg:pl-24 order-2 lg:order-1 gap-6 pb-20 lg:pb-0 z-10"
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-      >
-        <div className="space-y-2">
-            <motion.span
-                className="text-blue-600 dark:text-blue-400 font-bold tracking-widest uppercase text-sm"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-            >
-                Welcome to my portfolio
-            </motion.span>
-            <motion.h1
-            className="text-4xl lg:text-7xl font-black text-gray-900 dark:text-white leading-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            >
-            Hi, I&apos;m <br />
-            <AnimatePresence mode="wait">
+      <div className="w-full lg:w-1/2 px-6 py-12 lg:px-24 z-10 order-2 lg:order-1 flex flex-col justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-blue-600 dark:text-blue-400 font-bold text-lg md:text-xl mb-4 tracking-widest uppercase flex items-center gap-3">
+             <span className="w-12 h-[2px] bg-blue-600 dark:bg-blue-400"></span>
+             Hello World!
+          </h2>
+          <h1 className="text-gray-900 dark:text-white font-black text-5xl md:text-7xl mb-6 leading-[1.1]">
+            I&apos;m {" "}
+            <div className="h-[1.2em] relative overflow-hidden inline-block align-bottom min-w-[250px]">
+              <AnimatePresence mode="wait">
                 <motion.span
-                key={texts[index]}
-                className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-500"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.5 }}
+                  key={texts[index]}
+                  initial={{ y: 50, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -50, opacity: 0 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  className="absolute left-0 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500 dark:from-blue-400 dark:to-cyan-300"
                 >
-                {texts[index]}
+                  {texts[index]}
                 </motion.span>
-            </AnimatePresence>
-            </motion.h1>
-        </div>
-        
-        <p className="text-gray-600 dark:text-gray-400 max-w-lg text-lg lg:text-xl leading-relaxed font-medium">
-            I build high-performance, beautiful digital experiences with a focus on clean architecture and innovative AI integration.
-        </p>
+              </AnimatePresence>
+            </div>
+          </h1>
+          
+          <p className="text-gray-600 dark:text-gray-400 text-lg md:text-xl max-w-xl mb-10 leading-relaxed font-medium">
+            Building robust applications and exploring the future of artificial intelligence with clean, scalable, and efficient code.
+          </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.7 }}
-          className="flex items-center gap-4 mt-2"
-        >
-          {[
-            { icon: <BsInstagram />, href: 'https://www.instagram.com/frisnadiyk/', color: 'hover:bg-pink-500' },
-            { icon: <MdOutlineAttachEmail />, href: 'mailto:frisnadi1@gmail.com', color: 'hover:bg-green-500' },
-            { icon: <BsGithub />, href: 'https://github.com/frisyk', color: 'hover:bg-gray-900' },
-            { icon: <BsLinkedin />, href: 'https://www.linkedin.com/in/frisnadi-nurul-huda-883334247/', color: 'hover:bg-blue-600' }
-          ].map((social, i) => (
+          {/* Social Links & CTA */}
+          <div className="flex flex-wrap items-center gap-6 mb-12">
             <Link 
-                key={i}
-                target='_blank' 
-                href={social.href} 
-                className={`w-12 h-12 flex items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 ${social.color} hover:text-white transition-all duration-300 shadow-sm`}
+                href="/projects" 
+                className="px-10 py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-2xl font-bold transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-blue-500/20"
             >
-                <motion.div whileHover={{ scale: 1.2, rotate: 5 }}>
-                    {social.icon}
-                </motion.div>
+              View Projects
             </Link>
-          ))}
-        </motion.div>
+            <div className="flex items-center gap-5">
+              <a href="https://github.com/frisnadidwi" target="_blank" rel="noopener noreferrer" className="p-3 bg-gray-100 dark:bg-gray-800 rounded-xl text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-110">
+                <BsGithub size={24} />
+              </a>
+              <a href="https://www.linkedin.com/in/frisnadi-dwi-f-91757a24b/" target="_blank" rel="noopener noreferrer" className="p-3 bg-gray-100 dark:bg-gray-800 rounded-xl text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-110">
+                <BsLinkedin size={24} />
+              </a>
+              <a href="https://www.instagram.com/frisnadidwi/" target="_blank" rel="noopener noreferrer" className="p-3 bg-gray-100 dark:bg-gray-800 rounded-xl text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-110">
+                <BsInstagram size={24} />
+              </a>
+              <a href="mailto:frisnadidwi@gmail.com" className="p-3 bg-gray-100 dark:bg-gray-800 rounded-xl text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-110">
+                <MdOutlineAttachEmail size={24} />
+              </a>
+            </div>
+          </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 1 }}
-          className="flex flex-wrap gap-4 mt-8"
-        >
-          <Link
-            href="/projects"
-            className="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-white transition-all duration-300 bg-gray-900 dark:bg-white dark:text-gray-900 rounded-2xl hover:scale-105 active:scale-95 shadow-xl"
+          <motion.div 
+            animate={{ y: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+            className="flex items-center gap-4 text-gray-400 font-bold uppercase tracking-widest text-xs"
           >
-            View Projects
-          </Link>
-          <Link
-            href="/about"
-            className="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-gray-900 dark:text-white transition-all duration-300 bg-transparent border-2 border-gray-200 dark:border-gray-700 rounded-2xl hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 hover:scale-105 active:scale-95"
-          >
-            My Story
-          </Link>
+            <div className="w-12 h-px bg-gray-300 dark:bg-gray-700"></div>
+            Scroll to explore
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
-
 }

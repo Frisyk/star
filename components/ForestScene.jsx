@@ -8,7 +8,8 @@ export default function ForestScene() {
   const isDarkMode = useDarkMode()
 
   useEffect(() => {
-    if (!containerRef.current) return
+    const currentContainer = containerRef.current
+    if (!currentContainer) return
 
     // Colors based on theme
     const fogColor = isDarkMode ? 0x111827 : 0xf3f4f6
@@ -21,15 +22,15 @@ export default function ForestScene() {
     scene.fog = new THREE.FogExp2(fogColor, 0.002)
 
     // Camera
-    const camera = new THREE.PerspectiveCamera(60, containerRef.current.clientWidth / containerRef.current.clientHeight, 0.1, 1000)
+    const camera = new THREE.PerspectiveCamera(60, currentContainer.clientWidth / currentContainer.clientHeight, 0.1, 1000)
     camera.position.set(0, 5, 20)
     camera.lookAt(0, 0, 0)
 
     // Renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
-    renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight)
+    renderer.setSize(currentContainer.clientWidth, currentContainer.clientHeight)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    containerRef.current.appendChild(renderer.domElement)
+    currentContainer.appendChild(renderer.domElement)
 
     // Lights
     const ambientLight = new THREE.AmbientLight(ambientColor, isDarkMode ? 2 : 1)
@@ -49,43 +50,27 @@ export default function ForestScene() {
     })
     const ground = new THREE.Mesh(groundGeometry, groundMaterial)
     ground.rotation.x = -Math.PI / 2
-    
-    // Add terrain noise
-    const positionAttribute = groundGeometry.attributes.position
-    for (let i = 0; i < positionAttribute.count; i++) {
-        const x = positionAttribute.getX(i)
-        const y = positionAttribute.getY(i)
-        const z = Math.sin(x * 0.1) * Math.cos(y * 0.1) * 2
-        positionAttribute.setZ(i, z)
-    }
-    groundGeometry.computeVertexNormals()
-    
     scene.add(ground)
 
-    // Trees (Simple Cones)
-    const treeGeometry = new THREE.ConeGeometry(1, 4, 8)
+    // Forest / Trees (Simple procedural trees)
+    const treeGeometry = new THREE.ConeGeometry(0.5, 2, 8)
     const treeMaterial = new THREE.MeshStandardMaterial({ 
-        color: isDarkMode ? 0x064e3b : 0x10b981, 
-        flatShading: true 
+        color: isDarkMode ? 0x064e3b : 0x059669,
+        wireframe: true 
     })
-    
-    const trees = []
-    for(let i = 0; i < 50; i++) {
+
+    for(let i = 0; i < 100; i++) {
         const tree = new THREE.Mesh(treeGeometry, treeMaterial)
-        const x = (Math.random() - 0.5) * 100
-        const z = (Math.random() - 0.5) * 100
-        
-        if(Math.abs(x) < 5) continue
-        
-        tree.position.set(x, 2, z)
-        tree.scale.setScalar(0.5 + Math.random() * 1.5)
+        tree.position.x = (Math.random() - 0.5) * 150
+        tree.position.z = (Math.random() - 0.5) * 150
+        tree.position.y = 1
+        tree.scale.setScalar(Math.random() * 2 + 1)
         scene.add(tree)
-        trees.push(tree)
     }
 
-    // Particles (Fireflies/Dust)
+    // Particles (Snow/Fireflies)
     const particlesGeometry = new THREE.BufferGeometry()
-    const particlesCount = 200
+    const particlesCount = 500
     const posArray = new Float32Array(particlesCount * 3)
 
     for(let i = 0; i < particlesCount * 3; i++) {
@@ -94,34 +79,36 @@ export default function ForestScene() {
 
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3))
     const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.2,
-        color: isDarkMode ? 0xfef08a : 0x3b82f6,
+        size: 0.05,
+        color: isDarkMode ? 0x60a5fa : 0x10b981,
         transparent: true,
-        opacity: 0.8
+        opacity: 0.6
     })
     const particles = new THREE.Points(particlesGeometry, particlesMaterial)
     scene.add(particles)
 
-
-    // Interaction
+    // Animation state
     let mouseX = 0
     let mouseY = 0
-    
-    const handleMouseMove = (event) => {
-        mouseX = (event.clientX / window.innerWidth - 0.5) * 2
-        mouseY = (event.clientY / window.innerHeight - 0.5) * 2
+    const handleMouseMove = (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 10
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 10
     }
     document.addEventListener('mousemove', handleMouseMove)
 
-    // Animation
+    // Animation Loop
     const animate = () => {
         const animationId = requestAnimationFrame(animate)
 
-        camera.position.x += (mouseX * 5 - camera.position.x) * 0.05
-        camera.position.y += (-mouseY * 2 + 5 - camera.position.y) * 0.05
-        camera.lookAt(0, 2, 0)
+        // Camera movement based on mouse
+        camera.position.x += (mouseX - camera.position.x) * 0.05
+        camera.position.y += (-mouseY + 5 - camera.position.y) * 0.05
+        camera.lookAt(0, 0, 0)
 
+        // Particles animation
         particles.rotation.y += 0.001
+        particles.position.y -= 0.01
+        if (particles.position.y < -10) particles.position.y = 10
 
         renderer.render(scene, camera)
         return animationId
@@ -130,10 +117,10 @@ export default function ForestScene() {
 
     // Resize
     const handleResize = () => {
-        if (!containerRef.current) return
-        camera.aspect = containerRef.current.clientWidth / containerRef.current.clientHeight
+        if (!currentContainer) return
+        camera.aspect = currentContainer.clientWidth / currentContainer.clientHeight
         camera.updateProjectionMatrix()
-        renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight)
+        renderer.setSize(currentContainer.clientWidth, currentContainer.clientHeight)
     }
     window.addEventListener('resize', handleResize)
 
@@ -141,8 +128,8 @@ export default function ForestScene() {
         cancelAnimationFrame(animationId)
         window.removeEventListener('resize', handleResize)
         document.removeEventListener('mousemove', handleMouseMove)
-        if (containerRef.current && renderer.domElement) {
-            containerRef.current.removeChild(renderer.domElement)
+        if (currentContainer && renderer.domElement) {
+            currentContainer.removeChild(renderer.domElement)
         }
         groundGeometry.dispose()
         groundMaterial.dispose()
