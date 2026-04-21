@@ -7,10 +7,10 @@ import TreeScene from "./TreeScene";
 import CustomCursor from "./CustomCursor";
 
 const texts = [
-  "Frisnadi✨",
-  "a Full-stack Developer🚀",
-  "a Software Engineer💻",
-  "an AI Enthusiast🤖",
+  "Frisnadi",
+  "a Full-stack Developer",
+  "a Software Engineer",
+  "an AI Enthusiast",
 ];
 
 export function Home() {
@@ -54,7 +54,7 @@ export function Home() {
             <span className="w-8 h-[2px] bg-blue-600 dark:bg-blue-400"></span>
             Hello World!
           </h2>
-          <h1 className="text-gray-900 dark:text-white font-black text-4xl md:text-6xl mb-4 leading-tight flex flex-wrap items-center">
+          <h1 className="text-gray-900 dark:text-white font-black text-2xl md:text-3xl mb-4 leading-tight flex flex-wrap items-center">
             {/* Gunakan span agar tetap satu baris dengan I'm */}
             <span className="mr-3">I&apos;m</span>
 
@@ -123,14 +123,14 @@ export function Home() {
             </div>
           </div>
 
-          <motion.div
+          {/* <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 2 }}
             className="flex items-center gap-3 text-gray-400 font-bold uppercase tracking-widest text-[10px]"
           >
             <div className="w-8 h-px bg-gray-300 dark:bg-gray-700"></div>
             Explore Universe
-          </motion.div>
+          </motion.div> */}
         </motion.div>
       </div>
     </div>
