@@ -63,7 +63,7 @@ export default function RootLayout({ children }) {
       <body className={`${inter.className} dark:bg-gray-900 dark:text-white`}>
         <ThemeProvider>
           <Header />
-          <main className='md:mt-20'>{children}</main>
+          <main className='overflow-hidden'>{children}</main>
           {/* <Footer /> */}
           <GeminiChatBot />
         </ThemeProvider>
