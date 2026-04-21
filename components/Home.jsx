@@ -80,16 +80,16 @@ export function Home() {
               View Projects
             </Link>
             <div className="flex items-center gap-3">
-              <a href="https://github.com/frisnadidwi" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-110">
+              <a href="https://github.com/frisyk" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-110">
                 <BsGithub size={20} />
               </a>
-              <a href="https://www.linkedin.com/in/frisnadi-dwi-f-91757a24b/" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-110">
+              <a href="https://www.linkedin.com/in/frisnadi-nurul-huda-883334247/" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-110">
                 <BsLinkedin size={20} />
               </a>
-              <a href="https://www.instagram.com/frisnadidwi/" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-gray-100 dark:bg-gray-800 rounded-xl text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-110">
+              <a href="https://www.instagram.com/frisnadiyk/" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-gray-100 dark:bg-gray-800 rounded-xl text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-110">
                 <BsInstagram size={20} />
               </a>
-              <a href="mailto:frisnadidwi@gmail.com" className="p-2.5 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-110">
+              <a href="mailto:frisnadiyk@gmail.com" className="p-2.5 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-110">
                 <MdOutlineAttachEmail size={20} />
               </a>
             </div>
